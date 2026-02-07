@@ -7,22 +7,22 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.States;
-import frc.robot.States.ShooterValveStates;
+import frc.robot.States.ValveStates;
 
 
-public class ShooterValve {
+public class ValveSubsystem {
 
     // intialize variables
     private final SparkFlex valveMotor; 
     private final PIDController valvePID; 
     private final DutyCycleEncoder valveEncoder; 
     
-    private ShooterValveStates valveStates;
+    private ValveStates valveStates;
     
     private double valveSpeed; 
 
     // Constructor 
-    public ShooterValve() {
+    public ValveSubsystem() {
         // Assign values
         valveMotor = new SparkFlex(Constants.ShooterValve.id,MotorType.kBrushless); 
         valvePID = new PIDController(Constants.ShooterValve.KP, Constants.ShooterValve.KI, Constants.ShooterValve.KD); 
@@ -34,7 +34,7 @@ public class ShooterValve {
     }
 
     // we can set the state of the valve
-    public void setValveStates(ShooterValveStates states) {
+    public void setValveStates(ValveStates states) {
         valveStates = states;
         // sets the speed of the valve depending on the state it is in
         switch (states) {
