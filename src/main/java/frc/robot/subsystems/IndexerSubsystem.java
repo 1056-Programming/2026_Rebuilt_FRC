@@ -9,33 +9,31 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.States;
-import frc.robot.States.ValveStates;
+import frc.robot.States.IndexStates;;
 
 
-public class ValveSubsystem {
+public class IndexerSubsystem {
 
     // intialize variables
-    private final SparkFlex valveMotor; 
-    private final DutyCycleEncoder valveEncoder; 
+    private final SparkFlex indexMotor; 
     
-    private ValveStates valveStates;
+    private IndexStates indexStates;
     
-    private double valveSpeed; 
+    private double indexSpeed; 
 
     // Constructor 
-    public ValveSubsystem() {
+    public IndexerSubsystem() {
         // Assign values
-        valveMotor = new SparkFlex(Constants.ValveInfo.id,MotorType.kBrushless); 
-        valveEncoder = new DutyCycleEncoder(0); 
+        indexMotor = new SparkFlex(Constants.ValveInfo.id,MotorType.kBrushless); 
 
-        valveSpeed = 0; 
+        indexSpeed = 0; 
 
-        setValveStates(valveStates.STOP);
+        setValveStates(indexStates.STOP);
     }
 
     // we can set the state of the valve
-    public void setValveStates(ValveStates states) {
-        valveStates = states;
+    public void setValveStates(IndexStates states) {
+        indexStates = states;
         // sets the speed of the valve depending on the state it is in
         switch (states) {
             case IN :{
@@ -55,13 +53,13 @@ public class ValveSubsystem {
 
     // sets the speed of the valve
     public void setValveSpeed(double speed) {
-        valveMotor.set(speed); 
+        indexMotor.set(speed); 
     }
     
     // inserts all of the values into the smart dashboard
     private void setSmartDashboardValue() {
-        SmartDashboard.putNumber("Valve Speed: ", valveSpeed); 
-        SmartDashboard.putString("Valve State: ", valveStates.toString());    
+        SmartDashboard.putNumber("Valve Speed: ", indexSpeed); 
+        SmartDashboard.putString("Valve State: ", indexStates.toString());    
     }
 
 }
