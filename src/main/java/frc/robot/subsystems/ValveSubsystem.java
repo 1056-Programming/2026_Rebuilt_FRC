@@ -1,3 +1,5 @@
+package frc.robot.subsystems;
+
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
@@ -14,7 +16,6 @@ public class ValveSubsystem {
 
     // intialize variables
     private final SparkFlex valveMotor; 
-    private final PIDController valvePID; 
     private final DutyCycleEncoder valveEncoder; 
     
     private ValveStates valveStates;
@@ -24,8 +25,7 @@ public class ValveSubsystem {
     // Constructor 
     public ValveSubsystem() {
         // Assign values
-        valveMotor = new SparkFlex(Constants.ShooterValve.id,MotorType.kBrushless); 
-        valvePID = new PIDController(Constants.ShooterValve.KP, Constants.ShooterValve.KI, Constants.ShooterValve.KD); 
+        valveMotor = new SparkFlex(Constants.ValveInfo.id,MotorType.kBrushless); 
         valveEncoder = new DutyCycleEncoder(0); 
 
         valveSpeed = 0; 
@@ -40,18 +40,16 @@ public class ValveSubsystem {
         switch (states) {
             case IN :{
                 setValveSpeed(0.05); // positive intake for now
-                break; 
             }
             case OUT :{
                 setValveSpeed(-0.05); // positive intake for now
-                break; 
             }
             case STOP :{
                 setValveSpeed(0.0); // positive intake for now
-                break; 
             }
 
             setSmartDashboardValue();
+            break;
         }
     }
 

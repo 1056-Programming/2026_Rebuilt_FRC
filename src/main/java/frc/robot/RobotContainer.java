@@ -15,10 +15,12 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.commands.ShooterCommands;
 import frc.robot.commands.ValveCommands;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.*;
+import frc.robot.States.ShooterStates;
 import frc.robot.States.ValveStates;
 
 public class RobotContainer {
@@ -41,10 +43,16 @@ public class RobotContainer {
 
     // set up substystem 
     private final ValveSubsystem s_valve = new ValveSubsystem(); 
+    private final ShooterSubsystem s_shooter = new ShooterSubsystem();
+
     // set up intake commands
     private final ValveCommands c_valve_in = new ValveCommands(s_valve, ValveStates.IN);
     private final ValveCommands c_valve_out = new ValveCommands(s_valve, ValveStates.OUT);
     private final ValveCommands c_valve_stop = new ValveCommands(s_valve, ValveStates.STOP);
+
+    // set up shooter commands
+    private final ShooterCommands c_shooter_shoot = new ShooterCommands(s_shooter, ShooterStates.SHOOT);
+    private final ShooterCommands c_shoot_stop = new ShooterCommands(s_shooter, ShooterStates.STOP); 
  
 
     public RobotContainer() {
@@ -87,15 +95,25 @@ public class RobotContainer {
 
         drivetrain.registerTelemetry(logger::telemeterize);
 
+        configureDriver1ValveBindings();
         configureDriver1ShooterBindings();
     }
 
-    private void configureDriver1ShooterBindings() {
-        driver1.a().onTrue(c_valve_in); // implement commands then do this
+    // set controller bindings for the valve subsystem 
+    // ** NEED TO CHANGE BINDINGS LATER **
+    private void configureDriver1ValveBindings() {
+        driver1.a().onTrue(c_valve_in); 
         driver1.a().onFalse(c_valve_stop);
 
         driver1.b().onTrue(c_valve_out);
         driver1.b().onFalse(c_valve_stop); 
+    }
+
+    // set controller bindings for the shooter subsystem 
+    // ** NEED TO CHANGE BINDINGS LATER **
+    private void configureDriver1ShooterBindings() {
+        driver1.rightBumper().onTrue(c_shooter_shoot);
+        driver1.leftBumper().onTrue(c_shoot_stop); 
     }
 
     public Command getAutonomousCommand() {
